@@ -45,7 +45,7 @@ jobs:
 
   ssh-connect-ec2-QA01:
     needs: [login-and-pull-qa]
-    uses: ./.github/workflows/setup.yml
+    uses: ./.github/workflows/setup_docker.yml
     secrets:
       ec2_host: ${{ secrets.EC2_HOST_QA  }}
       ec2_key: ${{ secrets.EC2_PRIVATE_KEY_QA }}
