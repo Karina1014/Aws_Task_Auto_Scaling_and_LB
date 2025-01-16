@@ -26,7 +26,7 @@ jobs:
           docker push ${{ secrets.DOCKER_USERNAME }}/qa:latest
 
   login-and-pull-main:
-    if: github.event_name == 'pull_request' && github.base_ref == 'main' 
+    if: github.event_name == 'pull_request' && github.base_ref == 'main'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -47,7 +47,7 @@ jobs:
     needs: [login-and-pull-qa]
     uses: ./.github/workflows/setup.yml
     secrets:
-      ec2_host: ${{ secrets.EC2_HOST_QA  }}
+      ec2_host: ${{ secrets.EC2_HOST_QA }}
       ec2_key: ${{ secrets.EC2_PRIVATE_KEY_QA }}
       docker_username: ${{ secrets.DOCKER_USERNAME }}
       repository_name: ${{ secrets.DOCKER_REPOSITORY_NAME_QA }}
@@ -56,9 +56,9 @@ jobs:
     needs: [login-and-pull-qa]
     uses: ./.github/workflows/setup.yml
     secrets:
-      ec2_host: ${{ secrets.EC2_SERVER_QA_TWO  }}
+      ec2_host: ${{ secrets.EC2_SERVER_QA_TWO }}
       ec2_key: ${{ secrets.EC2_PRIVATE_KEY_QA }}
       docker_username: ${{ secrets.DOCKER_USERNAME }}
       repository_name: ${{ secrets.DOCKER_REPOSITORY_NAME_QA }}
-  
+
       
