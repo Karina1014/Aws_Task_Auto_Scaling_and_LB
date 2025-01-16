@@ -46,7 +46,7 @@ jobs:
   ssh-connect-ec2-QA01:
     needs: [deploy-qa]
     uses: ./.github/workflows/setup.yml
-    secrets:
+    with:
       ec2_host: ${{ secrets.EC2_HOST_QA }}
       ec2_key: ${{ secrets.EC2_PRIVATE_KEY_QA }}
       docker_username: ${{ secrets.DOCKER_USERNAME }}
@@ -55,7 +55,7 @@ jobs:
   ssh-connect-ec2-QA02:
     needs: [deploy-qa]
     uses: ./.github/workflows/setup.yml
-    secrets:
+    with:
       ec2_host: ${{ secrets.EC2_SERVER_QA_TWO }}
       ec2_key: ${{ secrets.EC2_PRIVATE_KEY_QA }}
       docker_username: ${{ secrets.DOCKER_USERNAME }}
@@ -64,7 +64,7 @@ jobs:
   ssh-connect-ec2-PROD1:
     needs: [deploy-production]
     uses: ./.github/workflows/setup.yml
-    secrets:
+    with:
       ec2_host: ${{ secrets.EC2_HOST_PROD }}
       ec2_key: ${{ secrets.EC2_PRIVATE_KEY_QA }}
       docker_username: ${{ secrets.DOCKER_USERNAME }}
@@ -73,25 +73,25 @@ jobs:
   ssh-connect-ec2-PROD2:
     needs: [deploy-production]
     uses: ./.github/workflows/setup.yml
-    secrets:
+    with:
       ec2_host: ${{ secrets.EC2_HOST_PROD_TWO }}
       ec2_key: ${{ secrets.EC2_PRIVATE_KEY_QA }}
       docker_username: ${{ secrets.DOCKER_USERNAME }}
       repository_name: ${{ secrets.DOCKER_REPOSITORY_NAME_PROD }}
-
+  
   ssh-connect-ec2-PROD3:
     needs: [deploy-production]
     uses: ./.github/workflows/setup.yml
-    secrets:
+    with:
       ec2_host: ${{ secrets.EC2_HOST_PROD_THREE }}
       ec2_key: ${{ secrets.EC2_PRIVATE_KEY_QA }}
       docker_username: ${{ secrets.DOCKER_USERNAME }}
       repository_name: ${{ secrets.DOCKER_REPOSITORY_NAME_PROD }}
-
+  
   ssh-connect-ec2-PROD4:
     needs: [deploy-production]
     uses: ./.github/workflows/setup.yml
-    secrets:
+    with:
       ec2_host: ${{ secrets.EC2_HOST_PROD_FOUR }}
       ec2_key: ${{ secrets.EC2_PRIVATE_KEY_QA }}
       docker_username: ${{ secrets.DOCKER_USERNAME }}
