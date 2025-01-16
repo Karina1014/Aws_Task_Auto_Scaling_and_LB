@@ -87,3 +87,12 @@ jobs:
       ec2_key: ${{ secrets.EC2_PRIVATE_KEY_QA }}
       docker_username: ${{ secrets.DOCKER_USERNAME }}
       repository_name: ${{ secrets.DOCKER_REPOSITORY_NAME_PROD }}
+
+  ssh-connect-ec2-PROD4:
+    needs: [deploy-production]
+    uses: ./.github/workflows/setup.yml
+    secrets:
+      ec2_host: ${{ secrets.EC2_HOST_PROD_FOUR }}
+      ec2_key: ${{ secrets.EC2_PRIVATE_KEY_QA }}
+      docker_username: ${{ secrets.DOCKER_USERNAME }}
+      repository_name: ${{ secrets.DOCKER_REPOSITORY_NAME_PROD }}
