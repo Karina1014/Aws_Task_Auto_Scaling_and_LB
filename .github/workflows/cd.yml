@@ -52,13 +52,13 @@ jobs:
       docker_username: ${{ secrets.DOCKER_USERNAME }}
       repository_name: ${{ secrets.DOCKER_REPOSITORY_NAME_QA }}
 
-      ssh-connect-ec2-QA02:
-        needs: [login-and-pull-qa]
-        uses: ./.github/workflows/setup.yml
-        secrets:
-          ec2_host: ${{ secrets.EC2_SERVER_QA_TWO  }}
-          ec2_key: ${{ secrets.EC2_PRIVATE_KEY_QA }}
-          docker_username: ${{ secrets.DOCKER_USERNAME }}
-          repository_name: ${{ secrets.DOCKER_REPOSITORY_NAME_QA }}
+  ssh-connect-ec2-QA02:
+    needs: [login-and-pull-qa]
+    uses: ./.github/workflows/setup.yml
+    secrets:
+      ec2_host: ${{ secrets.EC2_SERVER_QA_TWO  }}
+      ec2_key: ${{ secrets.EC2_PRIVATE_KEY_QA }}
+      docker_username: ${{ secrets.DOCKER_USERNAME }}
+      repository_name: ${{ secrets.DOCKER_REPOSITORY_NAME_QA }}
   
       
