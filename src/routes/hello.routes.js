@@ -5,7 +5,7 @@ const router = Router()
 
 router.get('/', (req, res)=>{
     const hostname = os.hostname();
-    res.send(`Container ID >: ${hostname}`)
+    res.send(`Container Id ${hostname}`)
 })
 
 export default router
