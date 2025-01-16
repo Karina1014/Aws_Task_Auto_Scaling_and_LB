@@ -41,4 +41,4 @@ jobs:
 
           sudo docker pull ${{ secrets.docker_username }}/${{ secrets.repository_name }}:latest
           sudo docker stop $(docker ps -q) || true
-          sudo docker run -d -p 3000:3000 ${{ secrets.docker_username }}/${{ secrets.repository_name }}:latest
+          sudo docker run -d -p 80:3000 ${{ secrets.docker_username }}/${{ secrets.repository_name }}:latest
