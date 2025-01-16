@@ -40,8 +40,8 @@ jobs:
  
       - name: Build and push Docker image
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/prd:latest .
-          docker push ${{ secrets.DOCKER_USERNAME }}/prd:latest
+          sudo docker build -t ${{ secrets.DOCKER_USERNAME }}/prd:latest .
+          sudo docker push ${{ secrets.DOCKER_USERNAME }}/prd:latest
 
   ssh-connect-ec2-QA01:
     needs: [login-and-pull-qa]
