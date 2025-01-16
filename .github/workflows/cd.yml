@@ -7,7 +7,7 @@ on:
     branches: ["main"]
 
 jobs:
-  login-and-pull-qa:
+  deploy-qa:
     if: github.ref == 'refs/heads/QA'
     runs-on: ubuntu-latest
     steps:
@@ -25,8 +25,8 @@ jobs:
           docker build -t ${{ secrets.DOCKER_USERNAME }}/qa:latest .
           docker push ${{ secrets.DOCKER_USERNAME }}/qa:latest
 
-  login-and-pull-main:
-    if: github.event_name == 'pull_request' && github.base_ref == 'main' 
+  deploy-production:
+    if: github.event_name == 'pull_request' && github.base_ref == 'main'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -40,14 +40,50 @@ jobs:
  
       - name: Build and push Docker image
         run: |
-          sudo docker build -t ${{ secrets.DOCKER_USERNAME }}/prd:latest .
-          sudo docker push ${{ secrets.DOCKER_USERNAME }}/prd:latest
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/prd:latest .
+          docker push ${{ secrets.DOCKER_USERNAME }}/prd:latest
 
   ssh-connect-ec2-QA01:
-    needs: [login-and-pull-qa]
-    uses: ./.github/workflows/setup_docker.yml
+    needs: [deploy-qa]
+    uses: ./.github/workflows/setup.yml
     secrets:
-      ec2_host: ${{ secrets.EC2_HOST_QA  }}
+      ec2_host: ${{ secrets.EC2_HOST_QA }}
       ec2_key: ${{ secrets.EC2_PRIVATE_KEY_QA }}
       docker_username: ${{ secrets.DOCKER_USERNAME }}
       repository_name: ${{ secrets.DOCKER_REPOSITORY_NAME_QA }}
+
+  ssh-connect-ec2-QA02:
+    needs: [deploy-qa]
+    uses: ./.github/workflows/setup.yml
+    secrets:
+      ec2_host: ${{ secrets.EC2_SERVER_QA_TWO }}
+      ec2_key: ${{ secrets.EC2_PRIVATE_KEY_QA }}
+      docker_username: ${{ secrets.DOCKER_USERNAME }}
+      repository_name: ${{ secrets.DOCKER_REPOSITORY_NAME_QA }}
+  
+  ssh-connect-ec2-PROD1:
+    needs: [deploy-production]
+    uses: ./.github/workflows/setup.yml
+    secrets:
+      ec2_host: ${{ secrets.EC2_HOST_PROD }}
+      ec2_key: ${{ secrets.EC2_PRIVATE_KEY_QA }}
+      docker_username: ${{ secrets.DOCKER_USERNAME }}
+      repository_name: ${{ secrets.DOCKER_REPOSITORY_NAME_PROD }}
+
+  ssh-connect-ec2-PROD2:
+    needs: [deploy-production]
+    uses: ./.github/workflows/setup.yml
+    secrets:
+      ec2_host: ${{ secrets.EC2_HOST_PROD_TWO }}
+      ec2_key: ${{ secrets.EC2_PRIVATE_KEY_QA }}
+      docker_username: ${{ secrets.DOCKER_USERNAME }}
+      repository_name: ${{ secrets.DOCKER_REPOSITORY_NAME_PROD }}
+
+  ssh-connect-ec2-PROD3:
+    needs: [deploy-production]
+    uses: ./.github/workflows/setup.yml
+    secrets:
+      ec2_host: ${{ secrets.EC2_HOST_PROD_THREE }}
+      ec2_key: ${{ secrets.EC2_PRIVATE_KEY_QA }}
+      docker_username: ${{ secrets.DOCKER_USERNAME }}
+      repository_name: ${{ secrets.DOCKER_REPOSITORY_NAME_PROD }}
